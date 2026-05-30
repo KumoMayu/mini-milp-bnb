@@ -1,0 +1,12 @@
+.venv/
+**pycache**/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+legacy/
+legacy2/
+reports/
+private/
+*.pyc
+.env
