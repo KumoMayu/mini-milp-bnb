@@ -46,9 +46,6 @@ def build_problem() -> MILPProblem:
         b=b,
         x_lb=np.zeros(3),
         x_ub=capacity,
-        y_lb=np.zeros(3),
-        y_ub=np.ones(3),
-        y_types=["B","B","B"],
         sense="min",
         name="fixed_charge_block",
     )

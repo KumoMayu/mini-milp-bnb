@@ -1,14 +1,45 @@
-cat > .gitignore <<'EOF'
+# Virtual environments
 .venv/
+.venv-ml/
+venv/
+
+# Python caches and build output
 __pycache__/
+**/__pycache__/
+*.py[cod]
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Editors, operating-system files, and logs
 .DS_Store
+.vscode/
+.idea/
+*.log
+
+# Private material and local credentials
+private/
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+gurobi.lic
+*.lic.local
+
+# Local historical snapshots
 legacy/
 legacy2/
-private/
-reports/
-verification/
-*.pyc
-.env
-EOF
+
+# Generated ML datasets and checkpoint binaries
+ml_branching/data/generated/
+trained_models/**/*.pt
+trained_models/**/linear_baseline.json
+trained_models/**/training_summary.csv
+trained_models/**/training_summary.json

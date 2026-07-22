@@ -1,0 +1,178 @@
+数据集,案例,seed,units,算法,状态,目标值,节点数,LP求解次数,不可行剪枝数,界剪枝数,整数剪枝数,全局界,相对gap,运行时间,是否与Gurobi一致,备注
+core,fixed_charge_block,,,DFS+active-set,optimal,28.5,7,11,1,3,0,,,0.122172,True,
+core,unit_commitment_tiny,,,DFS+active-set,optimal,26,5,9,2,1,0,,,0.008184,True,
+core,production_expansion_binary,,,DFS+active-set,optimal,31.5,9,13,2,2,1,,,0.120678,True,
+scaling,scaling_units_2,,,DFS+active-set,optimal,18.399,5,9,2,1,0,,,0.007319,True,
+scaling,scaling_units_3,,,DFS+active-set,optimal,28.488,7,11,2,0,2,,,0.118990,True,
+scaling,scaling_units_4,,,DFS+active-set,optimal,35.665,13,17,3,3,1,,,2.978256,True,
+scaling,scaling_units_5,,,DFS+active-set,LIMIT,50.506,1,4,0,0,0,,,3.485573,,raw_status=candidate_limit
+presolve,fixed_charge_block,,,DFS+active-set,optimal,28.5,7,11,1,3,0,,,0.582576,True,
+presolve,fixed_charge_block,,,DFS+active-set,optimal,28.5,7,11,1,3,0,,,0.123068,True,
+presolve,unit_commitment_tiny,,,DFS+active-set,optimal,26,5,9,2,1,0,,,0.048068,True,
+presolve,unit_commitment_tiny,,,DFS+active-set,optimal,26,5,9,2,1,0,,,0.009117,True,
+presolve,production_expansion_binary,,,DFS+active-set,optimal,31.5,9,13,2,2,1,,,0.678287,True,
+presolve,production_expansion_binary,,,DFS+active-set,optimal,31.5,9,13,2,2,1,,,0.122784,True,
+presolve,scaling_units_2,,,DFS+active-set,optimal,18.399,5,9,2,1,0,,,0.021236,True,
+presolve,scaling_units_2,,,DFS+active-set,optimal,18.399,5,9,2,1,0,,,0.007575,True,
+presolve,scaling_units_3,,,DFS+active-set,optimal,28.488,7,11,2,0,2,,,0.595001,True,
+presolve,scaling_units_3,,,DFS+active-set,optimal,28.488,7,11,2,0,2,,,0.119077,True,
+presolve,scaling_units_4,,,DFS+active-set,optimal,35.665,13,17,3,3,1,,,22.045283,True,
+presolve,scaling_units_4,,,DFS+active-set,optimal,35.665,13,17,3,3,1,,,2.930741,True,
+presolve,scaling_units_5,,,DFS+active-set,LIMIT,,1,4,0,0,0,,,6.911420,,raw_status=candidate_limit
+presolve,scaling_units_5,,,DFS+active-set,LIMIT,50.506,1,4,0,0,0,,,3.415650,,raw_status=candidate_limit
+backends,fixed_charge_block,,,DFS+active-set,optimal,28.5,7,11,1,3,0,,,0.122332,True,
+backends,fixed_charge_block,,,DFS+SciPy-HiGHS,optimal,28.5,7,11,1,3,0,,,0.008178,True,
+backends,unit_commitment_tiny,,,DFS+active-set,optimal,26,5,9,2,1,0,,,0.009074,True,
+backends,unit_commitment_tiny,,,DFS+SciPy-HiGHS,optimal,26,5,9,2,1,0,,,0.006040,True,
+backends,production_expansion_binary,,,DFS+active-set,optimal,31.5,9,13,2,2,1,,,0.131655,True,
+backends,production_expansion_binary,,,DFS+SciPy-HiGHS,optimal,31.5,9,13,2,2,1,,,0.009719,True,
+backends,scaling_units_2,,,DFS+active-set,optimal,18.399,5,9,2,1,0,,,0.008035,True,
+backends,scaling_units_2,,,DFS+SciPy-HiGHS,optimal,18.399,5,9,2,1,0,,,0.006642,True,
+backends,scaling_units_3,,,DFS+active-set,optimal,28.488,7,11,2,0,2,,,0.125085,True,
+backends,scaling_units_3,,,DFS+SciPy-HiGHS,optimal,28.488,7,11,2,0,2,,,0.007515,True,
+backends,scaling_units_4,,,DFS+active-set,optimal,35.665,13,17,3,3,1,,,2.966759,True,
+backends,scaling_units_4,,,DFS+SciPy-HiGHS,optimal,35.665,13,17,3,3,1,,,0.010926,True,
+backends,scaling_units_5,,,DFS+active-set,LIMIT,50.506,1,4,0,0,0,,,3.445026,,raw_status=candidate_limit
+backends,scaling_units_5,,,DFS+SciPy-HiGHS,optimal,42.656,21,25,5,3,3,,,0.016482,True,
+batch,batch_units_2_seed_0,0,2,DFS+active-set,optimal,23.804519,5,9,2,1,0,,,0.007811,True,
+batch,batch_units_2_seed_0,0,2,DFS+SciPy-HiGHS,optimal,23.804519,5,9,2,1,0,,,0.005414,True,
+batch,batch_units_2_seed_1,1,2,DFS+active-set,optimal,31.873844,3,6,1,1,0,,,0.007280,True,
+batch,batch_units_2_seed_1,1,2,DFS+SciPy-HiGHS,optimal,31.873844,3,6,1,1,0,,,0.003753,True,
+batch,batch_units_2_seed_2,2,2,DFS+active-set,optimal,21.497778,3,7,1,1,0,,,0.007069,True,
+batch,batch_units_2_seed_2,2,2,DFS+SciPy-HiGHS,optimal,21.497778,3,7,1,1,0,,,0.004312,True,
+batch,batch_units_2_seed_3,3,2,DFS+active-set,optimal,22.316514,5,9,2,1,0,,,0.007450,True,
+batch,batch_units_2_seed_3,3,2,DFS+SciPy-HiGHS,optimal,22.316514,5,9,2,1,0,,,0.005133,True,
+batch,batch_units_2_seed_4,4,2,DFS+active-set,optimal,32.389692,3,6,1,1,0,,,0.007119,True,
+batch,batch_units_2_seed_4,4,2,DFS+SciPy-HiGHS,optimal,32.389692,3,6,1,1,0,,,0.003732,True,
+batch,batch_units_3_seed_0,0,3,DFS+active-set,optimal,40.471695,5,9,2,1,0,,,0.118126,True,
+batch,batch_units_3_seed_0,0,3,DFS+SciPy-HiGHS,optimal,40.471695,5,9,2,1,0,,,0.005478,True,
+batch,batch_units_3_seed_1,1,3,DFS+active-set,optimal,29.098846,7,11,1,1,2,,,0.122426,True,
+batch,batch_units_3_seed_1,1,3,DFS+SciPy-HiGHS,optimal,29.098846,7,11,1,1,2,,,0.007121,True,
+batch,batch_units_3_seed_2,2,3,DFS+active-set,optimal,33.497582,3,7,1,0,1,,,0.116800,True,
+batch,batch_units_3_seed_2,2,3,DFS+SciPy-HiGHS,optimal,33.497582,3,7,1,0,1,,,0.004895,True,
+batch,batch_units_3_seed_3,3,3,DFS+active-set,optimal,25.380372,3,7,1,1,0,,,0.116211,True,
+batch,batch_units_3_seed_3,3,3,DFS+SciPy-HiGHS,optimal,25.380372,3,7,1,1,0,,,0.004496,True,
+batch,batch_units_3_seed_4,4,3,DFS+active-set,optimal,37.92209,5,9,2,1,0,,,0.117649,True,
+batch,batch_units_3_seed_4,4,3,DFS+SciPy-HiGHS,optimal,37.92209,5,9,2,1,0,,,0.005647,True,
+batch,batch_units_4_seed_0,0,4,DFS+active-set,optimal,57.768338,9,13,3,0,2,,,2.842008,True,
+batch,batch_units_4_seed_0,0,4,DFS+SciPy-HiGHS,optimal,57.768338,9,13,3,0,2,,,0.008250,True,
+batch,batch_units_4_seed_1,1,4,DFS+active-set,optimal,45.520526,11,15,2,2,2,,,2.901886,True,
+batch,batch_units_4_seed_1,1,4,DFS+SciPy-HiGHS,optimal,45.520526,11,15,2,2,2,,,0.009865,True,
+batch,batch_units_4_seed_2,2,4,DFS+active-set,optimal,34.480494,5,9,1,0,2,,,2.862339,True,
+batch,batch_units_4_seed_2,2,4,DFS+SciPy-HiGHS,optimal,34.480494,5,9,1,0,2,,,0.006138,True,
+batch,batch_units_4_seed_3,3,4,DFS+active-set,optimal,37.916513,13,17,4,2,1,,,2.912127,True,
+batch,batch_units_4_seed_3,3,4,DFS+SciPy-HiGHS,optimal,37.916513,13,17,4,2,1,,,0.011251,True,
+batch,batch_units_4_seed_4,4,4,DFS+active-set,optimal,53.072917,7,11,0,4,0,,,2.900699,True,
+batch,batch_units_4_seed_4,4,4,DFS+SciPy-HiGHS,optimal,53.072917,7,11,0,4,0,,,0.007597,True,
+batch,batch_units_5_seed_0,0,5,DFS+active-set,LIMIT,67.876745,1,4,0,0,0,,,3.435724,,raw_status=candidate_limit
+batch,batch_units_5_seed_0,0,5,DFS+SciPy-HiGHS,optimal,54.827235,3,7,0,2,0,,,0.005065,True,
+batch,batch_units_5_seed_1,1,5,DFS+active-set,LIMIT,66.810489,1,4,0,0,0,,,3.446595,,raw_status=candidate_limit
+batch,batch_units_5_seed_1,1,5,DFS+SciPy-HiGHS,optimal,61.081489,13,17,3,4,0,,,0.011302,True,
+batch,batch_units_5_seed_2,2,5,DFS+active-set,LIMIT,55.460747,1,4,0,0,0,,,3.473917,,raw_status=candidate_limit
+batch,batch_units_5_seed_2,2,5,DFS+SciPy-HiGHS,optimal,49.586747,11,15,3,1,2,,,0.010062,True,
+batch,batch_units_5_seed_3,3,5,DFS+active-set,LIMIT,62.640704,1,4,0,0,0,,,3.427133,,raw_status=candidate_limit
+batch,batch_units_5_seed_3,3,5,DFS+SciPy-HiGHS,optimal,59.866756,13,17,4,1,2,,,0.011552,True,
+batch,batch_units_5_seed_4,4,5,DFS+active-set,LIMIT,71.190343,1,4,0,0,0,,,3.441245,,raw_status=candidate_limit
+batch,batch_units_5_seed_4,4,5,DFS+SciPy-HiGHS,optimal,58.273283,7,11,1,2,1,,,0.007683,True,
+core,fixed_charge_block,,,best-bound+active-set,optimal,28.5,7,10,1,3,0,28.5,0,0.074199,True,
+core,unit_commitment_tiny,,,best-bound+active-set,optimal,26,5,8,2,1,0,26,0,0.007172,True,
+core,production_expansion_binary,,,best-bound+active-set,optimal,31.5,9,12,2,2,1,31.5,0,0.077525,True,
+scaling,scaling_units_2,,,best-bound+active-set,optimal,18.399,5,8,2,1,0,18.399,0,0.004828,True,
+scaling,scaling_units_3,,,best-bound+active-set,optimal,28.488,5,8,1,1,1,28.488,0,0.068839,True,
+scaling,scaling_units_4,,,best-bound+active-set,optimal,35.665,13,16,3,3,1,35.665,0,1.679975,True,
+scaling,scaling_units_5,,,best-bound+active-set,LIMIT,50.506,1,3,0,0,0,,,1.729907,,raw_status=candidate_limit
+presolve,fixed_charge_block,,,best-bound+active-set,optimal,28.5,7,10,1,3,0,28.5,0,0.530773,True,
+presolve,fixed_charge_block,,,best-bound+active-set,optimal,28.5,7,10,1,3,0,28.5,0,0.068671,True,
+presolve,unit_commitment_tiny,,,best-bound+active-set,optimal,26,5,8,2,1,0,26,0,0.041635,True,
+presolve,unit_commitment_tiny,,,best-bound+active-set,optimal,26,5,8,2,1,0,26,0,0.005508,True,
+presolve,production_expansion_binary,,,best-bound+active-set,optimal,31.5,9,12,2,2,1,31.5,0,0.621442,True,
+presolve,production_expansion_binary,,,best-bound+active-set,optimal,31.5,9,12,2,2,1,31.5,0,0.068877,True,
+presolve,scaling_units_2,,,best-bound+active-set,optimal,18.399,5,8,2,1,0,18.399,0,0.018861,True,
+presolve,scaling_units_2,,,best-bound+active-set,optimal,18.399,5,8,2,1,0,18.399,0,0.004973,True,
+presolve,scaling_units_3,,,best-bound+active-set,optimal,28.488,5,8,1,1,1,28.488,0,0.415693,True,
+presolve,scaling_units_3,,,best-bound+active-set,optimal,28.488,5,8,1,1,1,28.488,0,0.066243,True,
+presolve,scaling_units_4,,,best-bound+active-set,optimal,35.665,13,16,3,3,1,35.665,0,20.708900,True,
+presolve,scaling_units_4,,,best-bound+active-set,optimal,35.665,13,16,3,3,1,35.665,0,1.634837,True,
+presolve,scaling_units_5,,,best-bound+active-set,LIMIT,,1,3,0,0,0,,,5.120220,,raw_status=candidate_limit
+presolve,scaling_units_5,,,best-bound+active-set,LIMIT,50.506,1,3,0,0,0,,,1.801261,,raw_status=candidate_limit
+backends,fixed_charge_block,,,best-bound+active-set,optimal,28.5,7,10,1,3,0,28.5,0,0.069471,True,
+backends,fixed_charge_block,,,best-bound+SciPy-HiGHS,optimal,28.5,7,10,1,3,0,28.5,0,0.007153,True,
+backends,fixed_charge_block,,,Gurobi参考,optimal,28.5,,,,,,28.5,0,0.000317,True,optional full MIP reference
+backends,unit_commitment_tiny,,,best-bound+active-set,optimal,26,5,8,2,1,0,26,0,0.005606,True,
+backends,unit_commitment_tiny,,,best-bound+SciPy-HiGHS,optimal,26,5,8,2,1,0,26,0,0.004977,True,
+backends,unit_commitment_tiny,,,Gurobi参考,optimal,26,,,,,,26,0,0.000109,True,optional full MIP reference
+backends,production_expansion_binary,,,best-bound+active-set,optimal,31.5,9,12,2,2,1,31.5,0,0.071028,True,
+backends,production_expansion_binary,,,best-bound+SciPy-HiGHS,optimal,31.5,9,12,2,2,1,31.5,0,0.007980,True,
+backends,production_expansion_binary,,,Gurobi参考,optimal,31.5,,,,,,31.5,0,0.000598,True,optional full MIP reference
+backends,scaling_units_2,,,best-bound+active-set,optimal,18.399,5,8,2,1,0,18.399,0,0.005139,True,
+backends,scaling_units_2,,,best-bound+SciPy-HiGHS,optimal,18.399,5,8,2,1,0,18.399,0,0.004765,True,
+backends,scaling_units_2,,,Gurobi参考,optimal,18.399,,,,,,18.399,0,0.000090,True,optional full MIP reference
+backends,scaling_units_3,,,best-bound+active-set,optimal,28.488,5,8,1,1,1,28.488,0,0.067060,True,
+backends,scaling_units_3,,,best-bound+SciPy-HiGHS,optimal,28.488,5,8,1,1,1,28.488,0,0.005225,True,
+backends,scaling_units_3,,,Gurobi参考,optimal,28.488,,,,,,28.488,0,0.000687,True,optional full MIP reference
+backends,scaling_units_4,,,best-bound+active-set,optimal,35.665,13,16,3,3,1,35.665,0,1.628969,True,
+backends,scaling_units_4,,,best-bound+SciPy-HiGHS,optimal,35.665,13,16,3,3,1,35.665,0,0.010842,True,
+backends,scaling_units_4,,,Gurobi参考,optimal,35.665,,,,,,35.665,0,0.000756,True,optional full MIP reference
+backends,scaling_units_5,,,best-bound+active-set,LIMIT,50.506,1,3,0,0,0,,,1.705801,,raw_status=candidate_limit
+backends,scaling_units_5,,,best-bound+SciPy-HiGHS,optimal,42.656,9,12,1,3,1,42.656,0,0.008746,True,
+backends,scaling_units_5,,,Gurobi参考,optimal,42.656,,,,,,42.656,0,0.000869,True,optional full MIP reference
+batch,batch_units_2_seed_0,0,2,best-bound+active-set,optimal,23.804519,5,8,2,1,0,23.804519,0,0.004759,True,
+batch,batch_units_2_seed_0,0,2,best-bound+SciPy-HiGHS,optimal,23.804519,5,8,2,1,0,23.804519,0,0.004684,True,
+batch,batch_units_2_seed_0,0,2,Gurobi参考,optimal,23.804519,,,,,,23.804519,0,0.000079,True,optional full MIP reference
+batch,batch_units_2_seed_1,1,2,best-bound+active-set,optimal,31.873844,3,5,1,1,0,31.873844,0,0.004442,True,
+batch,batch_units_2_seed_1,1,2,best-bound+SciPy-HiGHS,optimal,31.873844,3,5,1,1,0,31.873844,0,0.003069,True,
+batch,batch_units_2_seed_1,1,2,Gurobi参考,optimal,31.873844,,,,,,31.873844,0,0.000084,True,optional full MIP reference
+batch,batch_units_2_seed_2,2,2,best-bound+active-set,optimal,21.497778,3,6,1,1,0,21.497778,0,0.004263,True,
+batch,batch_units_2_seed_2,2,2,best-bound+SciPy-HiGHS,optimal,21.497778,3,6,1,1,0,21.497778,0,0.003451,True,
+batch,batch_units_2_seed_2,2,2,Gurobi参考,optimal,21.497778,,,,,,21.497778,0,0.000062,True,optional full MIP reference
+batch,batch_units_2_seed_3,3,2,best-bound+active-set,optimal,22.316514,5,8,2,1,0,22.316514,0,0.004953,True,
+batch,batch_units_2_seed_3,3,2,best-bound+SciPy-HiGHS,optimal,22.316514,5,8,2,1,0,22.316514,0,0.004694,True,
+batch,batch_units_2_seed_3,3,2,Gurobi参考,optimal,22.316514,,,,,,22.316514,0,0.000080,True,optional full MIP reference
+batch,batch_units_2_seed_4,4,2,best-bound+active-set,optimal,32.389692,3,5,1,1,0,32.389692,0,0.004235,True,
+batch,batch_units_2_seed_4,4,2,best-bound+SciPy-HiGHS,optimal,32.389692,3,5,1,1,0,32.389692,0,0.003047,True,
+batch,batch_units_2_seed_4,4,2,Gurobi参考,optimal,32.389692,,,,,,32.389692,0,0.000062,True,optional full MIP reference
+batch,batch_units_3_seed_0,0,3,best-bound+active-set,optimal,40.471695,5,8,2,1,0,40.471695,0,0.065687,True,
+batch,batch_units_3_seed_0,0,3,best-bound+SciPy-HiGHS,optimal,40.471695,5,8,2,1,0,40.471695,0,0.005346,True,
+batch,batch_units_3_seed_0,0,3,Gurobi参考,optimal,40.471695,,,,,,40.471695,0,0.000114,True,optional full MIP reference
+batch,batch_units_3_seed_1,1,3,best-bound+active-set,optimal,29.098846,7,10,1,2,1,29.098846,0,0.069882,True,
+batch,batch_units_3_seed_1,1,3,best-bound+SciPy-HiGHS,optimal,29.098846,7,10,1,2,1,29.098846,0,0.006487,True,
+batch,batch_units_3_seed_1,1,3,Gurobi参考,optimal,29.098846,,,,,,29.098846,0,0.000514,True,optional full MIP reference
+batch,batch_units_3_seed_2,2,3,best-bound+active-set,optimal,33.497582,3,6,1,0,1,33.497582,0,0.064458,True,
+batch,batch_units_3_seed_2,2,3,best-bound+SciPy-HiGHS,optimal,33.497582,3,6,1,0,1,33.497582,0,0.003876,True,
+batch,batch_units_3_seed_2,2,3,Gurobi参考,optimal,33.497582,,,,,,33.497582,0,0.000524,True,optional full MIP reference
+batch,batch_units_3_seed_3,3,3,best-bound+active-set,optimal,25.380372,3,6,1,1,0,25.380372,0,0.063408,True,
+batch,batch_units_3_seed_3,3,3,best-bound+SciPy-HiGHS,optimal,25.380372,3,6,1,1,0,25.380372,0,0.004217,True,
+batch,batch_units_3_seed_3,3,3,Gurobi参考,optimal,25.380372,,,,,,25.380372,0,0.000438,True,optional full MIP reference
+batch,batch_units_3_seed_4,4,3,best-bound+active-set,optimal,37.92209,5,8,2,1,0,37.92209,0,0.065971,True,
+batch,batch_units_3_seed_4,4,3,best-bound+SciPy-HiGHS,optimal,37.92209,5,8,2,1,0,37.92209,0,0.005097,True,
+batch,batch_units_3_seed_4,4,3,Gurobi参考,optimal,37.92209,,,,,,37.92209,0,0.000115,True,optional full MIP reference
+batch,batch_units_4_seed_0,0,4,best-bound+active-set,optimal,57.768338,7,10,2,1,1,57.768338,0,1.549079,True,
+batch,batch_units_4_seed_0,0,4,best-bound+SciPy-HiGHS,optimal,57.768338,7,10,2,1,1,57.768338,0,0.006435,True,
+batch,batch_units_4_seed_0,0,4,Gurobi参考,optimal,57.768338,,,,,,57.768338,0,0.000756,True,optional full MIP reference
+batch,batch_units_4_seed_1,1,4,best-bound+active-set,optimal,45.520526,9,12,1,2,2,45.520526,0,1.616121,True,
+batch,batch_units_4_seed_1,1,4,best-bound+SciPy-HiGHS,optimal,45.520526,9,12,1,2,2,45.520526,0,0.008695,True,
+batch,batch_units_4_seed_1,1,4,Gurobi参考,optimal,45.520526,,,,,,45.520526,0,0.000635,True,optional full MIP reference
+batch,batch_units_4_seed_2,2,4,best-bound+active-set,optimal,34.480494,5,8,1,1,1,34.480494,0,1.564261,True,
+batch,batch_units_4_seed_2,2,4,best-bound+SciPy-HiGHS,optimal,34.480494,5,8,1,1,1,34.480494,0,0.005372,True,
+batch,batch_units_4_seed_2,2,4,Gurobi参考,optimal,34.480494,,,,,,34.480494,0,0.000662,True,optional full MIP reference
+batch,batch_units_4_seed_3,3,4,best-bound+active-set,optimal,37.916513,13,16,4,2,1,37.916513,0,1.618416,True,
+batch,batch_units_4_seed_3,3,4,best-bound+SciPy-HiGHS,optimal,37.916513,13,16,4,2,1,37.916513,0,0.010469,True,
+batch,batch_units_4_seed_3,3,4,Gurobi参考,optimal,37.916513,,,,,,37.916513,0,0.000769,True,optional full MIP reference
+batch,batch_units_4_seed_4,4,4,best-bound+active-set,optimal,53.072917,7,10,0,4,0,53.072917,0,1.617682,True,
+batch,batch_units_4_seed_4,4,4,best-bound+SciPy-HiGHS,optimal,53.072917,7,10,0,4,0,53.072917,0,0.007096,True,
+batch,batch_units_4_seed_4,4,4,Gurobi参考,optimal,53.072917,,,,,,53.072917,0,0.000714,True,optional full MIP reference
+batch,batch_units_5_seed_0,0,5,best-bound+active-set,LIMIT,67.876745,1,3,0,0,0,,,1.708939,,raw_status=candidate_limit
+batch,batch_units_5_seed_0,0,5,best-bound+SciPy-HiGHS,optimal,54.827235,3,6,0,2,0,54.827235,0,0.004402,True,
+batch,batch_units_5_seed_0,0,5,Gurobi参考,optimal,54.827235,,,,,,54.827235,0,0.000652,True,optional full MIP reference
+batch,batch_units_5_seed_1,1,5,best-bound+active-set,LIMIT,66.810489,1,3,0,0,0,,,1.705019,,raw_status=candidate_limit
+batch,batch_units_5_seed_1,1,5,best-bound+SciPy-HiGHS,optimal,61.081489,13,16,3,4,0,61.081489,0,0.010556,True,
+batch,batch_units_5_seed_1,1,5,Gurobi参考,optimal,61.081489,,,,,,61.081489,0,0.000696,True,optional full MIP reference
+batch,batch_units_5_seed_2,2,5,best-bound+active-set,LIMIT,55.460747,1,3,0,0,0,,,1.712653,,raw_status=candidate_limit
+batch,batch_units_5_seed_2,2,5,best-bound+SciPy-HiGHS,optimal,49.586747,9,12,2,2,1,49.586747,0,0.008501,True,
+batch,batch_units_5_seed_2,2,5,Gurobi参考,optimal,49.586747,,,,,,49.586747,0,0.000752,True,optional full MIP reference
+batch,batch_units_5_seed_3,3,5,best-bound+active-set,LIMIT,62.640704,1,3,0,0,0,,,1.704667,,raw_status=candidate_limit
+batch,batch_units_5_seed_3,3,5,best-bound+SciPy-HiGHS,optimal,59.866756,9,12,2,2,1,59.866756,0,0.008130,True,
+batch,batch_units_5_seed_3,3,5,Gurobi参考,optimal,59.866756,,,,,,59.866756,0,0.000925,True,optional full MIP reference
+batch,batch_units_5_seed_4,4,5,best-bound+active-set,LIMIT,71.190343,1,3,0,0,0,,,1.712824,,raw_status=candidate_limit
+batch,batch_units_5_seed_4,4,5,best-bound+SciPy-HiGHS,optimal,58.273283,7,10,1,2,1,58.273283,0,0.007514,True,
+batch,batch_units_5_seed_4,4,5,Gurobi参考,optimal,58.273283,,,,,,58.273283,0,0.000689,True,optional full MIP reference

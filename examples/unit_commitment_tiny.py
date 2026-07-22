@@ -49,9 +49,6 @@ def build_problem() -> MILPProblem:
         b=b,
         x_lb=np.zeros(2),
         x_ub=p_max,
-        y_lb=np.zeros(2),
-        y_ub=np.ones(2),
-        y_types=["B","B"],
         sense="min",
         name="unit_commitment_tiny",
     )

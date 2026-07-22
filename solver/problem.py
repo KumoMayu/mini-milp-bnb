@@ -36,24 +36,26 @@ class MILPProblem:
         b,
         x_lb,
         x_ub,
-        y_lb,
-        y_ub,
-        y_types,
-        sense: str = "max",
-        name: str = "block_milp",
+        y_lb=None,
+        y_ub=None,
+        y_types=None,
+        sense: str = "min",
+        name: str = "block_binary_milp",
     ) -> "MILPProblem":
-        """Create the public block MILP form A x + B y <= b.
+        """Create the public block binary MILP form A x + B y <= b.
 
         The public modeling interface separates continuous variables x from
-        integer/binary variables y:
+        binary variables y:
 
             min/max c_x^T x + c_y^T y
             s.t.    A x + B y <= b
                     x_lb <= x <= x_ub
-                    y_lb <= y <= y_ub
+                    y in {0,1}
 
         Internally this method concatenates z=[x;y], G=[A B], c=[c_x;c_y],
         and creates the unified matrix form G z <= b used by the solver.
+        y_lb, y_ub, and y_types are optional compatibility hooks; the public
+        v0.5-lite path leaves them unset so every y variable is binary.
         """
         c_x=np.asarray(c_x,dtype=float)
         c_y=np.asarray(c_y,dtype=float)
@@ -62,9 +64,6 @@ class MILPProblem:
         b=np.asarray(b,dtype=float)
         x_lb=np.asarray(x_lb,dtype=float)
         x_ub=np.asarray(x_ub,dtype=float)
-        y_lb=np.asarray(y_lb,dtype=float)
-        y_ub=np.asarray(y_ub,dtype=float)
-        y_types=[str(t).upper() for t in y_types]
 
         if c_x.ndim!=1:
             raise ValueError("c_x must be a one-dimensional vector")
@@ -84,6 +83,18 @@ class MILPProblem:
             raise ValueError("len(c_x) must equal A.shape[1]")
         if B.shape[1]!=len(c_y):
             raise ValueError("len(c_y) must equal B.shape[1]")
+        if y_lb is None:
+            y_lb=np.zeros(len(c_y),dtype=float)
+        else:
+            y_lb=np.asarray(y_lb,dtype=float)
+        if y_ub is None:
+            y_ub=np.ones(len(c_y),dtype=float)
+        else:
+            y_ub=np.asarray(y_ub,dtype=float)
+        if y_types is None:
+            y_types=["B"]*len(c_y)
+        else:
+            y_types=[str(t).upper() for t in y_types]
         if x_lb.ndim!=1 or x_ub.ndim!=1:
             raise ValueError("x_lb and x_ub must be one-dimensional vectors")
         if y_lb.ndim!=1 or y_ub.ndim!=1:
