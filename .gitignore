@@ -33,13 +33,9 @@ private/
 gurobi.lic
 *.lic.local
 
-# Local historical snapshots
-legacy/
-legacy2/
-
 # Generated ML datasets and checkpoint binaries
-ml_branching/data/generated/
-trained_models/**/*.pt
-trained_models/**/linear_baseline.json
-trained_models/**/training_summary.csv
-trained_models/**/training_summary.json
+research/ml_branching/data/generated/
+research/ml_branching/trained_models/**/*.pt
+research/ml_branching/trained_models/**/linear_baseline.json
+research/ml_branching/trained_models/**/training_summary.csv
+research/ml_branching/trained_models/**/training_summary.json

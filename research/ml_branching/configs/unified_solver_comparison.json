@@ -1,0 +1,199 @@
+{
+  "device": "cpu",
+  "main_gnn_strategy": "gnn_seed_1",
+  "stability_gnn_strategies": [
+    "gnn_seed_1",
+    "gnn_seed_2",
+    "gnn_seed_3"
+  ],
+  "gnn_checkpoints": {
+    "gnn_seed_1": "research/ml_branching/trained_models/learning_branching/gnn_stability_seed_1.pt",
+    "gnn_seed_2": "research/ml_branching/trained_models/learning_branching/gnn_stability_seed_2.pt",
+    "gnn_seed_3": "research/ml_branching/trained_models/learning_branching/gnn_stability_seed_3.pt"
+  },
+  "uc_stability_config": "research/ml_branching/configs/stability_test.json",
+  "branching_settings": {
+    "max_nodes": 3000,
+    "max_lp_candidates": 500000,
+    "time_limit_sec": 45,
+    "tolerance": 1e-8,
+    "warmup": true,
+    "repeats": 3,
+    "strong_branching_lp_backend": "scipy_highs"
+  },
+  "unified_settings": {
+    "max_nodes": 300,
+    "max_lp_candidates": 500000,
+    "time_limit_sec": 60,
+    "tolerance": 1e-8,
+    "warmup": true,
+    "repeats": 3,
+    "strong_branching_lp_backend": "scipy_highs"
+  },
+  "run_settings": {
+    "max_nodes": 300,
+    "max_lp_candidates": 500000,
+    "time_limit_sec": 60,
+    "tolerance": 1e-8,
+    "warmup": true,
+    "repeats": 3,
+    "strong_branching_lp_backend": "scipy_highs"
+  },
+  "selection_notes": {
+    "selection_rule": "The 2x2 instances were screened using only most-fractional branching, strong branching, active-set, and SciPy-HiGHS. GNN, MLP, pseudocost, SCIP, and Gurobi were not used for instance selection.",
+    "branch_sensitivity_rule": "Each selected instance is feasible, active-set solvable with three LP filters, has most-fractional B&B node count in the target medium range, has average candidate count close to or above 2, and has at least one strong-branching decision different from the original rule.",
+    "previous_small_set": "The previous 8 small/medium instances are retained only as a correctness check because both GNN and strong branching were almost all tied against the original rule."
+  },
+  "unified_instances": [
+    {
+      "id": "budget_nx2_ny5_s277",
+      "family": "branch_sensitive_cover",
+      "kind": "budget",
+      "seed": 277,
+      "continuous_count": 2,
+      "binary_count": 5
+    },
+    {
+      "id": "budget_nx2_ny6_s25",
+      "family": "branch_sensitive_cover",
+      "kind": "budget",
+      "seed": 25,
+      "continuous_count": 2,
+      "binary_count": 6
+    },
+    {
+      "id": "budget_nx2_ny6_s32",
+      "family": "branch_sensitive_cover",
+      "kind": "budget",
+      "seed": 32,
+      "continuous_count": 2,
+      "binary_count": 6
+    },
+    {
+      "id": "budget_nx2_ny6_s74",
+      "family": "branch_sensitive_cover",
+      "kind": "budget",
+      "seed": 74,
+      "continuous_count": 2,
+      "binary_count": 6
+    },
+    {
+      "id": "budget_nx2_ny6_s242",
+      "family": "branch_sensitive_cover",
+      "kind": "budget",
+      "seed": 242,
+      "continuous_count": 2,
+      "binary_count": 6
+    },
+    {
+      "id": "budget_nx2_ny6_s257",
+      "family": "branch_sensitive_cover",
+      "kind": "budget",
+      "seed": 257,
+      "continuous_count": 2,
+      "binary_count": 6
+    },
+    {
+      "id": "budget_nx2_ny6_s259",
+      "family": "branch_sensitive_cover",
+      "kind": "budget",
+      "seed": 259,
+      "continuous_count": 2,
+      "binary_count": 6
+    },
+    {
+      "id": "budget_nx2_ny6_s269",
+      "family": "branch_sensitive_cover",
+      "kind": "budget",
+      "seed": 269,
+      "continuous_count": 2,
+      "binary_count": 6
+    },
+    {
+      "id": "cardinality_nx2_ny6_s569",
+      "family": "branch_sensitive_cover",
+      "kind": "cardinality",
+      "seed": 569,
+      "continuous_count": 2,
+      "binary_count": 6
+    },
+    {
+      "id": "mutual_nx2_ny6_s182",
+      "family": "branch_sensitive_cover",
+      "kind": "mutual",
+      "seed": 182,
+      "continuous_count": 2,
+      "binary_count": 6
+    }
+  ],
+  "instances": [
+    {
+      "id": "fixed_multi_cover_s2",
+      "family": "fixed_charge_multi_resource",
+      "seed": 2,
+      "continuous_count": 2,
+      "binary_count": 5,
+      "demand_fraction": 0.45,
+      "backup_fraction": 0.25,
+      "resource_fraction": 0.75
+    },
+    {
+      "id": "fixed_multi_cover_s3",
+      "family": "fixed_charge_multi_resource",
+      "seed": 3,
+      "continuous_count": 2,
+      "binary_count": 5,
+      "demand_fraction": 0.45,
+      "backup_fraction": 0.25,
+      "resource_fraction": 0.75
+    },
+    {
+      "id": "capacity_cover_s4",
+      "family": "capacity_expansion",
+      "seed": 4,
+      "continuous_count": 2,
+      "binary_count": 5,
+      "demand_fraction": 0.45,
+      "backup_fraction": 0.25,
+      "resource_fraction": 0.75
+    },
+    {
+      "id": "capacity_cover_s8",
+      "family": "capacity_expansion",
+      "seed": 8,
+      "continuous_count": 2,
+      "binary_count": 5,
+      "demand_fraction": 0.45,
+      "backup_fraction": 0.25,
+      "resource_fraction": 0.75
+    },
+    {
+      "id": "random_sparse_s21",
+      "family": "random_sparse_block",
+      "seed": 21,
+      "size": 3,
+      "rows": 5
+    },
+    {
+      "id": "unit_commitment_u3_s1",
+      "family": "unit_commitment",
+      "seed": 1,
+      "units": 3,
+      "demand_fraction": 0.58
+    },
+    {
+      "id": "unit_commitment_u3_s2",
+      "family": "unit_commitment",
+      "seed": 2,
+      "units": 3,
+      "demand_fraction": 0.58
+    },
+    {
+      "id": "unit_commitment_u3_s4",
+      "family": "unit_commitment",
+      "seed": 4,
+      "units": 3,
+      "demand_fraction": 0.58
+    }
+  ]
+}

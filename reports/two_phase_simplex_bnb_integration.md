@@ -50,7 +50,8 @@ Active-set 枚举可能成为顶点的活跃约束组合；表格单纯形从一
 - two-phase：每个节点 `iteration_limit=10000`；
 - 时间：每个案例/后端预热 1 次，正式运行 3 次，报告中位数；
 - Gurobi：单线程，仅作完整 MIP 参考；
-- 原始三次时间见 `reports/two_phase_simplex_bnb_results.csv`。
+- 本节保留该阶段 checkpoint 的三次运行中位数；当前统一实验使用
+  `reports/benchmark_latest.csv`，指标口径以最新文件为准。
 
 ## 6. Core 与 Scaling 结果
 
