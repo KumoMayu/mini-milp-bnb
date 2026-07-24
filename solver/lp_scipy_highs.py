@@ -14,6 +14,7 @@ def solve_lp_relaxation_scipy_highs(
     max_candidates: int | None = None,
     use_matrix_presolve: bool = True,
     matrix_presolve_options=None,
+    max_iterations: int | None = None,
 ) -> LPResult:
     """Solve one node LP relaxation with scipy.optimize.linprog(method='highs').
 
@@ -25,6 +26,7 @@ def solve_lp_relaxation_scipy_highs(
 
     SciPy linprog minimizes, so the LP is passed as min -c^T z.
     """
+    del max_candidates, max_iterations
     try:
         from scipy.optimize import linprog
     except ImportError as exc:

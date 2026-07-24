@@ -388,6 +388,7 @@ def solve_lp_relaxation_tableau(
     max_candidates: int | None = None,
     use_matrix_presolve: bool = True,
     matrix_presolve_options=None,
+    max_iterations: int | None = None,
 ) -> LPResult:
     """Compatibility adapter for explicitly selected simple standard LPs.
 
@@ -411,7 +412,10 @@ def solve_lp_relaxation_tableau(
 
     A = np.vstack([problem.G, np.eye(problem.num_vars, dtype=float)])
     b = np.concatenate([problem.h, ub])
-    return TableauSimplexSolver(tolerance=tol).solve(
+    return TableauSimplexSolver(
+        tolerance=tol,
+        max_iterations=1000 if max_iterations is None else max_iterations,
+    ).solve(
         c=problem.internal_c,
         A=A,
         b=b,

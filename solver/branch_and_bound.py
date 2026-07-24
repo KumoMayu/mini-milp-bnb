@@ -99,6 +99,7 @@ def find_initial_incumbent(
     use_matrix_presolve: bool = True,
     matrix_presolve_options=None,
     root_lp=None,
+    max_lp_iterations: int | None = None,
 ):
     """Try simple binary-y assignments before the best-bound search starts."""
     stats={
@@ -108,6 +109,8 @@ def find_initial_incumbent(
         "num_removed_rows": 0,
         "num_tightened_bounds": 0,
         "num_free_vars": 0,
+        "num_simplex_iterations": 0,
+        "lp_runtime_sec": 0.0,
         "logs": [],
     }
     binary_indices=problem.binary_indices
@@ -121,9 +124,21 @@ def find_initial_incumbent(
     ]
 
     if root_lp is None:
-        root_lp=lp_solver(problem,problem.lb,problem.ub,tol,max_lp_candidates,use_matrix_presolve,matrix_presolve_options)
+        lp_start=perf_counter()
+        root_lp=lp_solver(
+            problem,
+            problem.lb,
+            problem.ub,
+            tol,
+            max_lp_candidates,
+            use_matrix_presolve,
+            matrix_presolve_options,
+            max_lp_iterations,
+        )
+        stats["lp_runtime_sec"]+=perf_counter()-lp_start
         stats["num_lp_solved"]+=1
         stats["num_candidates_checked"]+=root_lp.num_candidates_checked
+        stats["num_simplex_iterations"]+=root_lp.num_iterations
         stats["num_fixed_vars"]+=root_lp.num_fixed_vars
         stats["num_removed_rows"]+=root_lp.num_removed_rows
         stats["num_tightened_bounds"]+=root_lp.num_tightened_bounds
@@ -148,9 +163,21 @@ def find_initial_incumbent(
             node_lb[index]=value
             node_ub[index]=value
 
-        lp=lp_solver(problem,node_lb,node_ub,tol,max_lp_candidates,use_matrix_presolve,matrix_presolve_options)
+        lp_start=perf_counter()
+        lp=lp_solver(
+            problem,
+            node_lb,
+            node_ub,
+            tol,
+            max_lp_candidates,
+            use_matrix_presolve,
+            matrix_presolve_options,
+            max_lp_iterations,
+        )
+        stats["lp_runtime_sec"]+=perf_counter()-lp_start
         stats["num_lp_solved"]+=1
         stats["num_candidates_checked"]+=lp.num_candidates_checked
+        stats["num_simplex_iterations"]+=lp.num_iterations
         stats["num_fixed_vars"]+=lp.num_fixed_vars
         stats["num_removed_rows"]+=lp.num_removed_rows
         stats["num_tightened_bounds"]+=lp.num_tightened_bounds
@@ -195,6 +222,7 @@ class BranchAndBoundSolver:
         node_selection: str = "best_bound",
         time_limit_sec: float | None = None,
         verbose: bool = False,
+        max_lp_iterations: int | None = None,
     ):
         if branching_policy is not None and branching_rule!="most_fractional":
             raise ValueError("branching_policy cannot be combined with a non-default branching_rule")
@@ -206,6 +234,7 @@ class BranchAndBoundSolver:
         self.lp_backend=str(lp_backend).lower()
         self.lp_solver=get_lp_relaxation_solver(self.lp_backend)
         self.max_lp_candidates=max_lp_candidates
+        self.max_lp_iterations=max_lp_iterations
         self.use_matrix_presolve=use_matrix_presolve
         self.matrix_presolve_options=matrix_presolve_options
         self.node_selection=str(node_selection)
@@ -230,6 +259,8 @@ class BranchAndBoundSolver:
         num_pruned_optimality=0
         num_integer_solutions=0
         num_lp_candidates_checked=0
+        num_simplex_iterations=0
+        lp_runtime_sec=0.0
         num_fixed_vars_eliminated=0
         num_removed_rows=0
         num_tightened_bounds=0
@@ -248,10 +279,12 @@ class BranchAndBoundSolver:
 
         def solve_node_lp(node: BBNode):
             nonlocal num_nodes,num_lp_solved,num_lp_candidates_checked
+            nonlocal num_simplex_iterations,lp_runtime_sec
             nonlocal num_fixed_vars_eliminated,num_removed_rows,num_tightened_bounds
             nonlocal num_free_vars_total
             if num_nodes>=self.max_nodes:
                 return None
+            lp_start=perf_counter()
             lp=self.lp_solver(
                 problem,
                 node.lb,
@@ -260,10 +293,13 @@ class BranchAndBoundSolver:
                 self.max_lp_candidates,
                 self.use_matrix_presolve,
                 self.matrix_presolve_options,
+                self.max_lp_iterations,
             )
+            lp_runtime_sec+=perf_counter()-lp_start
             num_nodes+=1
             num_lp_solved+=1
             num_lp_candidates_checked+=lp.num_candidates_checked
+            num_simplex_iterations+=lp.num_iterations
             num_fixed_vars_eliminated+=lp.num_fixed_vars
             num_removed_rows+=lp.num_removed_rows
             num_tightened_bounds+=lp.num_tightened_bounds
@@ -327,6 +363,9 @@ class BranchAndBoundSolver:
                 initial_incumbent_found=initial_incumbent_found,
                 runtime_sec=elapsed,
                 log=logs,
+                lp_backend=self.lp_backend,
+                num_simplex_iterations=num_simplex_iterations,
+                lp_runtime_sec=lp_runtime_sec,
             )
 
         def classify_solved_node(node: BBNode,lp) -> str:
@@ -343,13 +382,27 @@ class BranchAndBoundSolver:
                 )
                 return "candidate_limit"
 
-            if lp.status!="optimal":
+            if lp.status=="infeasible":
                 num_pruned_infeasible+=1
                 add_log(
                     f"node={node.node_id} depth={node.depth} LP={lp.status} "
                     f"prune=infeasibility"
                 )
                 return "closed"
+
+            if lp.status!="optimal":
+                status=lp.status if lp.status in {
+                    "iteration_limit",
+                    "numerical_error",
+                    "unsupported",
+                    "unbounded",
+                    "lp_error",
+                } else "lp_error"
+                add_log(
+                    f"node={node.node_id} depth={node.depth} LP={lp.status} "
+                    f"terminate={status} message={lp.message}"
+                )
+                return status
 
             node_bound=float(lp.objective_value)
             node.lp_bound=node_bound
@@ -358,6 +411,7 @@ class BranchAndBoundSolver:
                 f"bound={node_bound:.6g} free_vars={lp.num_free_vars} "
                 f"fixed_vars={lp.num_fixed_vars} removed_rows={lp.num_removed_rows} "
                 f"tightened_bounds={lp.num_tightened_bounds} candidates={lp.num_candidates_checked} "
+                f"iterations={lp.num_iterations} backend={lp.backend} "
                 f"x={format_vector(lp.x)}"
             )
 
@@ -421,9 +475,12 @@ class BranchAndBoundSolver:
             self.use_matrix_presolve,
             self.matrix_presolve_options,
             root_lp=root_lp,
+            max_lp_iterations=self.max_lp_iterations,
         )
         num_lp_solved+=int(heuristic_stats["num_lp_solved"])
         num_lp_candidates_checked+=int(heuristic_stats["num_candidates_checked"])
+        num_simplex_iterations+=int(heuristic_stats["num_simplex_iterations"])
+        lp_runtime_sec+=float(heuristic_stats["lp_runtime_sec"])
         num_fixed_vars_eliminated+=int(heuristic_stats["num_fixed_vars"])
         num_removed_rows+=int(heuristic_stats["num_removed_rows"])
         num_tightened_bounds+=int(heuristic_stats["num_tightened_bounds"])
@@ -434,7 +491,16 @@ class BranchAndBoundSolver:
         logs.extend(heuristic_stats["logs"])
 
         root_status=classify_solved_node(root_node,root_lp)
-        if root_status in ("candidate_limit","node_limit"):
+        terminal_lp_statuses={
+            "candidate_limit",
+            "node_limit",
+            "iteration_limit",
+            "numerical_error",
+            "unsupported",
+            "unbounded",
+            "lp_error",
+        }
+        if root_status in terminal_lp_statuses:
             return make_result(root_status)
 
         while len(node_pool)>0:
@@ -534,7 +600,7 @@ class BranchAndBoundSolver:
                         None if child_lp is None else child_lp.objective_value,
                     )
                 child_status=classify_solved_node(child,child_lp)
-                if child_status in ("candidate_limit","node_limit"):
+                if child_status in terminal_lp_statuses:
                     return make_result(child_status)
 
         if incumbent_x is None:
@@ -555,6 +621,7 @@ def solve_milp(
     node_selection: str = "best_bound",
     time_limit_sec: float | None = None,
     verbose: bool = False,
+    max_lp_iterations: int | None = None,
 ):
     """Solve a MILPProblem with best-bound Branch-and-Bound."""
     solver=BranchAndBoundSolver(
@@ -565,6 +632,7 @@ def solve_milp(
         branching_policy=branching_policy,
         lp_backend=lp_backend,
         max_lp_candidates=max_lp_candidates,
+        max_lp_iterations=max_lp_iterations,
         use_matrix_presolve=use_matrix_presolve,
         matrix_presolve_options=matrix_presolve_options,
         node_selection=node_selection,

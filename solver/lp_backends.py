@@ -15,6 +15,11 @@ def get_lp_relaxation_solver(lp_backend: str):
         from .lp_tableau_simplex import solve_lp_relaxation_tableau
 
         return solve_lp_relaxation_tableau
+    if backend in {"two_phase_simplex","custom_two_phase"}:
+        from .lp_two_phase_simplex import solve_lp_relaxation_two_phase
+
+        return solve_lp_relaxation_two_phase
     raise ValueError(
-        'lp_backend must be "active_set", "scipy_highs", or "tableau_simplex"'
+        'lp_backend must be "active_set", "scipy_highs", "tableau_simplex", '
+        'or "two_phase_simplex"'
     )

@@ -58,6 +58,9 @@ class MILPResult:
     initial_incumbent_found: bool
     runtime_sec: float
     log: list[str]
+    lp_backend: str = "active_set"
+    num_simplex_iterations: int = 0
+    lp_runtime_sec: float = 0.0
 
     def simple_summary(self) -> str:
         if self.x is None:
@@ -79,7 +82,10 @@ class MILPResult:
             f"Relative gap: {self.relative_gap}",
             f"Nodes explored: {self.num_nodes}",
             f"LP relaxations solved: {self.num_lp_solved}",
+            f"LP backend: {self.lp_backend}",
             f"Active-set candidates checked: {self.num_lp_candidates_checked}",
+            f"Simplex iterations: {self.num_simplex_iterations}",
+            f"LP runtime seconds: {self.lp_runtime_sec:.6f}",
             f"Fixed variables eliminated: {self.num_fixed_vars_eliminated}",
             f"Rows removed by presolve: {self.num_removed_rows}",
             f"Bounds tightened by presolve: {self.num_tightened_bounds}",

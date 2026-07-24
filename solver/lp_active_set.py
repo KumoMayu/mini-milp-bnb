@@ -59,6 +59,7 @@ def solve_lp_relaxation(
     max_candidates: int | None = None,
     use_matrix_presolve: bool = True,
     matrix_presolve_options=None,
+    max_iterations: int | None = None,
 ) -> LPResult:
     """Solve one node LP relaxation with active-set enumeration.
 
@@ -70,6 +71,7 @@ def solve_lp_relaxation(
     methods use the fact that LP optima occur at vertices, but simplex walks
     between vertices rather than enumerating every candidate vertex.
     """
+    del max_iterations
     c=problem.internal_c
     lb=np.asarray(node_lb,dtype=float)
     ub=np.asarray(node_ub,dtype=float)

@@ -17,6 +17,7 @@ from .lp_tableau_simplex import (
     UNBOUNDED,
     TableauSimplexSolver,
 )
+from .matrix_presolve import presolve_node_matrix, reconstruct_solution
 from .result import LPResult
 
 
@@ -554,3 +555,122 @@ class TwoPhaseTableauSimplexSolver(TableauSimplexSolver):
             f"{column_names[leaving]:11s} | {objective:10.6g} | "
             f"[{', '.join(column_names[index] for index in basis)}]"
         )
+
+
+def solve_lp_relaxation_two_phase(
+    problem,
+    node_lb,
+    node_ub,
+    tol: float = 1e-8,
+    max_candidates: int | None = None,
+    use_matrix_presolve: bool = True,
+    matrix_presolve_options=None,
+    max_iterations: int | None = None,
+) -> LPResult:
+    """Solve one B&B node with the self-written two-phase tableau simplex.
+
+    B&B uses an internal maximization model ``max internal_c^T z`` with
+    ``G z <= h``. Current node bounds are passed through unchanged. Optional
+    matrix presolve may first remove fixed variables and redundant rows; the
+    general-LP standardizer then shifts the remaining finite lower bounds and
+    adds upper-bound rows. Any reduced solution is reconstructed in the
+    original variable space before it is returned to B&B.
+    """
+    del max_candidates
+    start = perf_counter()
+    c = np.asarray(problem.internal_c, dtype=float)
+    lb = np.asarray(node_lb, dtype=float)
+    ub = np.asarray(node_ub, dtype=float)
+
+    if lb.shape != c.shape or ub.shape != c.shape:
+        raise ValueError("node bounds must match the problem variable dimension")
+    if np.any(lb > ub + tol):
+        return LPResult(
+            status=INFEASIBLE,
+            objective_value=None,
+            x=None,
+            num_candidates_checked=0,
+            message="node lower bound exceeds upper bound",
+            backend="two_phase_simplex",
+            runtime_sec=perf_counter() - start,
+        )
+
+    presolve = None
+    if use_matrix_presolve:
+        presolve = presolve_node_matrix(
+            c,
+            problem.G,
+            problem.h,
+            lb,
+            ub,
+            tol,
+            options=matrix_presolve_options,
+        )
+        if presolve.status != "ok":
+            return LPResult(
+                status=INFEASIBLE,
+                objective_value=None,
+                x=None,
+                num_candidates_checked=0,
+                message=(
+                    presolve.infeasible_reason
+                    or "node matrix presolve detected an infeasible node"
+                ),
+                num_free_vars=len(presolve.free_indices),
+                num_fixed_vars=len(presolve.fixed_indices),
+                num_removed_rows=presolve.removed_rows,
+                num_tightened_bounds=presolve.tightened_bounds,
+                backend="two_phase_simplex",
+                runtime_sec=perf_counter() - start,
+            )
+        if len(presolve.c_reduced) == 0:
+            return LPResult(
+                status=OPTIMAL,
+                objective_value=float(presolve.objective_constant),
+                x=presolve.fixed_values.copy(),
+                num_candidates_checked=0,
+                message="all variables fixed, fixed point feasible",
+                num_free_vars=0,
+                num_fixed_vars=len(presolve.fixed_indices),
+                num_removed_rows=presolve.removed_rows,
+                num_tightened_bounds=presolve.tightened_bounds,
+                backend="two_phase_simplex",
+                runtime_sec=perf_counter() - start,
+            )
+        c_lp = presolve.c_reduced
+        A_lp = presolve.G_reduced
+        b_lp = presolve.h_reduced
+        lb_lp = presolve.lb_reduced
+        ub_lp = presolve.ub_reduced
+    else:
+        c_lp = c
+        A_lp = np.asarray(problem.G, dtype=float)
+        b_lp = np.asarray(problem.h, dtype=float)
+        lb_lp = lb
+        ub_lp = ub
+
+    solver = TwoPhaseTableauSimplexSolver(
+        tolerance=tol,
+        max_iterations=1000 if max_iterations is None else max_iterations,
+    )
+    result = solver.solve(
+        c=c_lp,
+        A=A_lp,
+        b=b_lp,
+        constraint_senses=["<="] * len(b_lp),
+        lb=lb_lp,
+        ub=ub_lp,
+        sense="max",
+    )
+    result.backend = "two_phase_simplex"
+
+    if presolve is not None:
+        result.num_fixed_vars += len(presolve.fixed_indices)
+        result.num_removed_rows = presolve.removed_rows
+        result.num_tightened_bounds = presolve.tightened_bounds
+        if result.x is not None:
+            result.x = reconstruct_solution(presolve, result.x)
+            result.objective_value = float(c @ result.x)
+
+    result.runtime_sec = perf_counter() - start
+    return result
